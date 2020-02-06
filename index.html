@@ -17,19 +17,21 @@
     .details {
       color: blue;
       font-weight: bold;
-      font-size:medium;
-      display: none;
+      font-size: medium;
+
     }
+
     .picture {
-     image-rendering: optimizeQuality;
-     border-image: fill ;
-     border-image-width: 3em;
+      image-rendering: optimizeQuality;
+      border-image: fill;
+      border-image-width: 3em;
     }
 
     .display_content {
-      display: none;
+      display: block;
     }
   </style>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -37,38 +39,33 @@
 
 <body>
   <div class="container">
-    <div class="table-responsive">
-      <h1 align="center">CSV File to HTML Table Using AJAX jQuery</h1>
-      <br />
-      <div align="center">
-        <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
-      </div>
-      <br />
-      <div id="employee_table">
+    <h1 align="center">CSV File to HTML Table Using AJAX jQuery</h1>
+    <br />
+    <div align="center">
+      <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
+    </div>
+    <br />
+    <div id="employee_table">
 
-      </div>
     </div>
   </div>
+
 </body>
 
 </html>
 
 <script>
   function myFunction(cell_count) {
-    
-    var newId = "details"+cell_count;
-    alert(newId);
+    var newId = "details" + cell_count;
     var x = document.getElementById(newId);
 
-  //  if (x.style.display === "none") {
+    if (x.style.display === "none") {
       x.style.display = "block";
-    //} else {
-     // x.style.display = "none";
-    //}
+    } else {
+      x.style.display = "none";
+    }
   }
-
   $(document).ready(function () {
-
 
     $('#load_data').click(function () {
       $.ajax({
@@ -78,55 +75,28 @@
           var employee_data = data.split(/\r?\n|\r/);
           var div_data;
           for (var count = 1; count < employee_data.length; count++) {
-            var div_cell;
-            //alert(employee_data[count]);
             var cell_data = employee_data[count].split("  ,  ");
+            var div_cell;
+
             for (var cell_count = 0; cell_count < cell_data.length; cell_count++) {
+
               if (cell_count === 5) {
-                div_cell += '<div><div class="picture" onclick="myFunction('+count+')" id="picture' + count+'">' + cell_data[5]+'</div>';
+                div_cell += '<div class="picture" onclick="myFunction(' + count + ')" id="picture' + count + '">' + cell_data[5] + '</div>';
                 div_cell += '<div id ="name" class="name"> Name: ' + cell_data[3] + '</div>';
-                div_cell += '<div id ="taxi" class="taxi">' + cell_data[6] + '</div></div>';
+                div_cell += '<div id ="taxi" class="taxi">' + cell_data[6] + '</div>';
               }
               else if (cell_count === 1)
-                div_cell += '<div class="details" id="details' +count+ '"><div> Date: ' + cell_data[1] + '</div>';
+                div_cell += '<div style="display: none;"  class="details" id="details' + count + '"><div> Date: ' + cell_data[1] + '</div>';
               else if (cell_count === 2)
                 div_cell += '<div> Time: ' + cell_data[2] + '</div>';
               else if (cell_count === 4)
                 div_cell += '<div> Description: ' + cell_data[4] + '</div></div>';
-
             }
-
           }
           div_data += div_cell;
           $('#employee_table').html(div_data);
-          /*  table_data += '<tr>';
-            for(var cell_count=0; cell_count<cell_data.length; cell_count++)
-            {
-             if(count === 0)
-             {
-              table_data += '<th>'+cell_data[cell_count]+'</th>';
-             }
-             else
-             {
-               
-                 if(cell_count === 5){
-                     table_data += '<div id ="pic"><td>'+cell_data[cell_count]+'</td></div>';
-                 }
-                 else{
-                  table_data += '<td>'+cell_data[cell_count]+'</td>';
-                 }
-              '</div>'
-             }
-            }
-            table_data += '</tr>';*/
-
-          //table_data += '</table>';
-          //$('#employee_table').html(table_data);
         }
       });
     });
-
   });
-
-
 </script>
