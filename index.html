@@ -76,6 +76,7 @@
 </head>
 
 <body>
+  
   <div class="container">
     <h1 align="center" class="title">Hello ! Senior Events near you </h1>
     <br />
@@ -123,7 +124,6 @@
       </div>
         <div>
           <input type="button" id="bt" value="Request a Taxi and Send me an SMS " onclick="saveFile()" />
-
       </div>
 
   </div>
@@ -132,9 +132,24 @@
 
 </body>
 
+
 </html>
 
 <script>
+
+$(document).ready(function(){
+   $.ajax({
+        url:'saveRequest.php',
+        type:'GET', 
+        data:"parameter=some_parameter",
+       success:function(data)
+       {
+              $("#smsDiv").html(data);
+           }
+    });
+});
+
+/*
   let saveFile = () => {
     var smstext ="";
       // Get the data from each element on the form.
@@ -154,7 +169,7 @@
       
       // Convert the text to BLOB.
       const textToBLOB = new Blob([data], { type: 'text/plain' });
-      const sFileName = 'C:\\Users\\mamalle\\Documents\\GitHub\\my-first-app\\formData.txt';	   // The file to save the data.
+      const sFileName = "formData.txt';	   // The file to save the data.
 
       let newLink = document.createElement("a");
       newLink.download = sFileName;
@@ -177,7 +192,7 @@
 
       newLink.click(); 
   }
- 
+ */
 
   function myFunction(cell_count) {
     var newId = "details" + cell_count;
@@ -200,27 +215,22 @@
           var employee_data = data.split(/\r?\n|\r/);
           var div_data;
           for (var count = 1; count < employee_data.length; count++) {
-            var cell_data = employee_data[count].split("  @  ");
+            var cell_data = employee_data[count].split("  ,  ");
             var div_cell;
-
-            for (var cell_count = 0; cell_count < cell_data.length; cell_count++) {
-
-              if (cell_count === 5) {
+            
+                div_cell += '<div class="details" id="details' + count + '">';
+                div_cell += '<div id ="name" class="name"> Name: ' + cell_data[3] + '</div>';
+                div_cell += '<div> Time: ' + cell_data[2] + '</div>';
+                div_cell += '<div> Description: ' + cell_data[4] + '</div>';
+                div_cell+= '<div >Date: ' + cell_data[1] + '</div></div>';
+                
                 div_cell += '<div class="picture" onclick="myFunction(' + count + ')" id="picture' + count + '">' + cell_data[5] + '</div>';
                 div_cell += '<div id ="name" class="name"> Name: ' + cell_data[3] + '</div>';
-                div_cell += '<div id ="taxi" class="taxi">' + cell_data[6] + '</div></div>';
-              }
-              else if (cell_count === 1){
-                  div_cell += '<div class="details" id="details' + count + '">';
-                  div_cell+= '<div ><div> Date: ' + cell_data[1] + '</div>';
-                }
-              else if (cell_count === 2)
-                div_cell += '<div> Time: ' + cell_data[2] + '</div>';
-              else if (cell_count === 4)
-                div_cell += '<div> Description: ' + cell_data[4] + '</div></div></div>';
-            }
+                div_cell += '<div id ="taxi" class="taxi">' + cell_data[6] + '</div>';
+          
           }
           div_data += div_cell;
+
           $('#employee_table').html(div_data);
           $('#taxi_table').hide();
           $('#employee_table').show();
