@@ -76,6 +76,7 @@
       <li role="presentation"><a href="#">Profile</a></li>
       <li role="presentation"><a href="#">Messages</a></li>
     </ul>
+
   <div class="container">
     <h1><span class="label label-info">Hello ! Welcome to Take Me Places App !! </span></h1></div>
     <br />
@@ -151,12 +152,14 @@
           <input class="btn btn-lg btn-success" type="button" id="bt" value="Request a Taxi and Send me an SMS " onclick="saveFile()" />
         </div>
 
+
       </div>
 
     </div>
     </div>
 
 </body>
+
 
 </html>
 
@@ -165,6 +168,8 @@
 
 
 function saveFile(){
+
+
     var smstext ="";
       // Get the data from each element on the form.
     const name = document.getElementById('txtName');
@@ -172,6 +177,19 @@ function saveFile(){
       const phonenumber = document.getElementById('txtPhone');
       const city = document.getElementById('selCity');
       const msg = document.getElementById('msg');
+      
+      // This variable stores all the data.
+      let data = 
+          '\r Name: ' + name.value + ' \r\n ' + 
+          'Phone Number: ' +age.value + ' \r\n ' + 
+          'Email: ' + email.value + ' \r\n ' + 
+          'Country: ' + country.value + ' \r\n ' + 
+          'Message: ' + msg.value;
+      
+      // Convert the text to BLOB.
+      const textToBLOB = new Blob([data], { type: 'text/plain' });
+      const sFileName = "formData.txt';	   // The file to save the data.
+
 
     const taxiemail = document.getElementById('selecttaxi');
     var emailLink = "<a id=\"sms\" href=mailto:"+taxiemail.value+"?Subject=\""+name.value+"\"&body=\""+msg.value+"\"\">Send Mail</a>";
@@ -237,6 +255,7 @@ function saveFile(){
                 div_cell += '<span class="text-info">' + cell_data[4] + '</span></div></div></div>';
           }
           div_data += div_cell;
+
           $('#employee_table').html(div_data);
           $('#taxi_table').hide();
           $('#employee_table').show();
