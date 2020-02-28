@@ -2,11 +2,15 @@
 <html>
 
 <head>
-  <title class="title">Take Me Places ! Taxi service for Senior Events near you </title>
+  <title class="jumbotron">Take Me Places ! Taxi service for Senior Events near you </title>
+  <!-- Bootstrap -->
+  <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .hide {
       display: none;
     }
+
+  
 
     .event-img {
       width: 300px;
@@ -22,15 +26,6 @@
       font-size:xx-large;
     }
 
-    .details {
-      color: blue;
-      font-weight: bold;
-      font-size: medium;
-      display: none;
-      border-style: groove;
-      border-color: coral;
-
-    }
 
     .picture {
       border-width: 1em;
@@ -41,11 +36,11 @@
     }
 
     .taxi{
-      font-size: xx-large;
-      font-style: oblique;
-      color:orangered;
+      font-size: x-large;
+      font:xx-large;
+      color:royalblue;
       border: 2em;
-      
+  
     }
     .taxi-image{
       height: 10em;
@@ -76,59 +71,92 @@
 </head>
 
 <body>
-  
-  <div class="container">
-    <h1 align="center" class="title">Hello ! Senior Events near you </h1>
-    <br />
-    <div align="center">
-      <button type="button" name="load_taxi_data" id="load_taxi_data" class="btn">Show Taxi List</button>
-      <button type="button" name="load_event_data" id="load_event_data" class="btn">Show Events List</button>
-    </div>
-    <br />
-    <div id="employee_table">
+  <ul class="nav nav-pills" role="tablist">
+      <li role="presentation" class="active"><a href="#">Home</a></li>
+      <li role="presentation"><a href="#">Profile</a></li>
+      <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
 
+  <div class="container">
+    <h1><span class="label label-info">Hello ! Welcome to Take Me Places App !! </span></h1></div>
+    <br />
+    <div class="panel panel-success">
+        <div align="center" class="panel-heading"><h2>Senior Events near you</h2>
+        </div>
+          <div align="center" class="panel-body">
+
+            <button type="button" name="load_taxi_data" id="load_taxi_data" class="btn btn-lg btn-success">Show Taxi List</button>
+            <button type="button" name="load_event_data" id="load_event_data" class="btn btn-lg btn-primary">Show Events List</button>
+    </div>
+        <br />
+    <div id="employee_table" class="container">
+        
+
+      
     </div>
     <div id="taxi_table">
 
     </div>
 
-    <p>Request a taxi</p>
-    <div>
+   
+
+
+    <div id="callTaxi" class="jumbotron" style="display: none;" >
+        <h2><span class="label label-success">Request a taxi</span></h2>
+          <div class="well">
         
-      <!--Add few elements to the form-->
+                <!--Add few elements to the form-->
 
-      <div>
-          <p>Name:</p> <input type="text" id="txtName" placeholder="Enter your name" />
-      </div>
-      <div>
-          <p></p><input type="datetime-local" id="txtAge" placeholder="Select Date and Time" />
-      </div>
-      <div>
-          <input type="text" id="txtEmail" placeholder="Enter your mobile number" />
-      </div>
-      <div>
-          <select id="selCountry">
-              <option selected value="">-- Choose the City --</option>
-              <option value="Kildeer">Kildeer</option>
-              <option value="Barrington">Barrington</option>
-              <option value="Vernon Hills">Vernon Hills</option>
-              <option value="Long Grove">Long Grove</option>
+                    <div>
+                        <span class="btn-sm btn-info">Name:</span> <input type="text" id="txtName" placeholder="Enter your name" />
+                    </div>
+                    <br>
+                    <div>
+                      <span class="btn-sm btn-info">Date and Time:</span><input type="datetime-local" id="txtdatetime" placeholder="Select Date and Time" />
+                    </div>
+                    <br>
+                    <div>
+                      <span class="btn-sm btn-info">Phone Number:</span><input type="text" id="txtPhone" placeholder="Enter your mobile number" />
+                    </div>
+                    <br>
+                    <div><span class="btn-sm btn-info">City:</span>
+                        <select id="selCity">
+                            <option selected value="">-- Choose the City --</option>
+                            <option value="Kildeer">Kildeer</option>
+                            <option value="Barrington">Barrington</option>
+                            <option value="Vernon Hills">Vernon Hills</option>
+                            <option value="Long Grove">Long Grove</option>
 
-          </select>
-      </div>
-      <div>
-          <textarea id="msg" name="msg" placeholder="Write some message ..." style="height:100px"></textarea>
-      </div>
-      <div id="smsDiv">
+                        </select>
+                    </div>
+                      <br>
+                    <div><span class="btn-sm btn-info">Taxi:</span>
+                      <select id="selecttaxi">
+                          <option selected value="">-- Choose the Taxi --</option>
+                          <option value="billybob@gmail.com">BillyBob</option>
+                          <option value="calvin@outlook.com">CalvinKlein</option>
+                          <option value="patel@brothers.com"> Patel Brothers</option>
+                          <option value="mrmallela@outlook.com">Shawn Mendes</option>
 
-      </div>
+                      </select>
+                  </div>
+                  <br>
+                    <div>
+                      <span class="btn-sm btn-info">Details:</span><textarea id="msg" name="msg" placeholder="Write some message ..." style="height:100px"></textarea>
+                    </div>
+                      <div id="smsDiv">
+
+                      </div>
         <div>
-          <input type="button" id="bt" value="Request a Taxi and Send me an SMS " onclick="saveFile()" />
+
+          <input class="btn btn-lg btn-success" type="button" id="bt" value="Request a Taxi and Send me an SMS " onclick="saveFile()" />
+        </div>
+
+
       </div>
 
-  </div>
-
-  </div>
+    </div>
+    </div>
 
 </body>
 
@@ -137,26 +165,17 @@
 
 <script>
 
-$(document).ready(function(){
-   $.ajax({
-        url:'saveRequest.php',
-        type:'GET', 
-        data:"parameter=some_parameter",
-       success:function(data)
-       {
-              $("#smsDiv").html(data);
-           }
-    });
-});
 
-/*
-  let saveFile = () => {
+
+function saveFile(){
+
+
     var smstext ="";
       // Get the data from each element on the form.
     const name = document.getElementById('txtName');
-      const age = document.getElementById('txtAge');
-      const email = document.getElementById('txtEmail');
-      const country = document.getElementById('selCountry');
+      const datetime = document.getElementById('txtdatetime');
+      const phonenumber = document.getElementById('txtPhone');
+      const city = document.getElementById('selCity');
       const msg = document.getElementById('msg');
       
       // This variable stores all the data.
@@ -171,28 +190,18 @@ $(document).ready(function(){
       const textToBLOB = new Blob([data], { type: 'text/plain' });
       const sFileName = "formData.txt';	   // The file to save the data.
 
-      let newLink = document.createElement("a");
-      newLink.download = sFileName;
 
-      if (window.webkitURL != null) {
-          newLink.href = window.webkitURL.createObjectURL(textToBLOB);
-        
-        }
-      else {
-          newLink.href = window.URL.createObjectURL(textToBLOB);
-          newLink.style.display = "none";
-          document.body.appendChild(newLink);
-      }
-     // smstext= "<a class=\"sms\" id=\"sms\" href=\"sms://+"+email.value+"?body=Taxi reservation has been made for "+msg.value+"\">Send a SMS message</a>";
-     calltext ="<a href=\"tel:"+email.value+"\">Call (312)972-5856<img class=\"taxi-image\" src=\"https://cabstartup.com/wp-content/uploads/2018/05/Yellow-Taxi-Banner.png\" class=\"aligncenter\" alt=\"\"></a>";  
-     document.getElementById("smsDiv").innerHTML=calltext;
-        alert(calltext);
+    const taxiemail = document.getElementById('selecttaxi');
+    var emailLink = "<a id=\"sms\" href=mailto:"+taxiemail.value+"?Subject=\""+name.value+"\"&body=\""+msg.value+"\"\">Send Mail</a>";
+     
+     
+     document.getElementById("smsDiv").innerHTML=emailLink;
         document.getElementById("sms").click();
         
 
       newLink.click(); 
   }
- */
+ 
 
   function myFunction(cell_count) {
     var newId = "details" + cell_count;
@@ -202,6 +211,22 @@ $(document).ready(function(){
       x.style.display = "block";
     } else {
       x.style.display = "none";
+    }
+  }
+
+  function callTaxi() {
+    var x = document.getElementById('callTaxi');
+    var y = document.getElementById('employee_table');
+
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.style.display = "none";
+
+    } else {
+
+      x.style.display = "none";
+      y.style.display = "block";
+
     }
   }
   
@@ -214,20 +239,20 @@ $(document).ready(function(){
         success: function (data) {
           var employee_data = data.split(/\r?\n|\r/);
           var div_data;
-          for (var count = 1; count < employee_data.length; count++) {
-            var cell_data = employee_data[count].split("  ,  ");
+          for (var count = 0; count < employee_data.length; count++) {
+            var cell_data = employee_data[count].split("  @  ");
             var div_cell;
-            
-                div_cell += '<div class="details" id="details' + count + '">';
-                div_cell += '<div id ="name" class="name"> Name: ' + cell_data[3] + '</div>';
-                div_cell += '<div> Time: ' + cell_data[2] + '</div>';
-                div_cell += '<div> Description: ' + cell_data[4] + '</div>';
-                div_cell+= '<div >Date: ' + cell_data[1] + '</div></div>';
+
+              div_cell += '<div class="row"><div class="col-lg-6"><div class="jumbotron" id="picture' + count + '"><img class="img-thumbnail" style="height:300px;width:300px"  src=" ' + cell_data[5] + ' "></div></div>';
+
+              div_cell += '<div class="col-lg-6">';
+                document.getElementById('txtName').value = cell_data[3];
+                div_cell += '<div id ="name" class="panel panel-primary"><div class="panel-heading">' + cell_data[3] + '</div></div>';
+                div_cell += '<button id ="taxi" onclick="callTaxi()" class="label-md label-warning">' + cell_data[6] + '</button><br>';
                 
-                div_cell += '<div class="picture" onclick="myFunction(' + count + ')" id="picture' + count + '">' + cell_data[5] + '</div>';
-                div_cell += '<div id ="name" class="name"> Name: ' + cell_data[3] + '</div>';
-                div_cell += '<div id ="taxi" class="taxi">' + cell_data[6] + '</div>';
-          
+                div_cell+= '<pre><div class="well" id="details' + count + '"><span class="text-primary "> It\'s on ' + cell_data[1] + '</span>';
+                div_cell += '<span class="text-success"> At ' + cell_data[2] + '</span><hr>';
+                div_cell += '<span class="text-info">' + cell_data[4] + '</span></div></div></div>';
           }
           div_data += div_cell;
 
